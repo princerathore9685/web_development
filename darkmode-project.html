@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Web Features Project</title>
+
+<style>
+
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial;
+margin:0;
+padding:0;
+background:white;
+color:black;
+transition:0.3s;
+}
+
+.dark{
+background:#121212;
+color:white;
+}
+
+header{
+background:#0077ff;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+nav{
+background:#333;
+padding:10px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:10px;
+text-decoration:none;
+font-size:18px;
+}
+
+section{
+padding:60px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+
+}
+
+
+form{
+max-width:400px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+.error{
+color:red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Web Project</h1>
+<button onclick="toggleDarkMode()">Dark Mode</button>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section id="home">
+<h2>Home Section</h2>
+<p>Welcome to my website.</p>
+</section>
+
+<section id="about">
+<h2>About Section</h2>
+<p>This is a demo project.</p>
+</section>
+
+<section id="contact">
+
+<h2>Contact Form</h2>
+
+<form id="myForm">
+
+<input type="text" id="name" placeholder="Enter Name">
+<input type="email" id="email" placeholder="Enter Email">
+
+<button type="submit" style="background-color: darkslategray;">Submit</button>
+
+<p class="error" id="error"></p>
+
+</form>
+
+</section>
+
+<script>
+
+/* Dark Mode Toggle */
+
+function toggleDarkMode(){
+document.body.classList.toggle("dark");
+}
+
+
+/* Form Validation */
+
+document.getElementById("myForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let email=document.getElementById("email").value;
+let error=document.getElementById("error");
+
+if(name=="" || email==""){
+error.innerText="All fields are required";
+}
+else{
+error.innerText="Form Submitted Successfully";
+}
+
+});
+
+</script>
+
+</body>
+</html>
