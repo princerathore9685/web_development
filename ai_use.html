@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Web Features Project</title>
+
+<style>
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial;
+margin:0;
+padding:0;
+background:white;
+color:black;
+transition:0.3s;
+}
+
+.dark{
+background:#121212;
+color:white;
+}
+
+header{
+background:#0077ff;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+nav{
+background:#333;
+padding:10px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:10px;
+text-decoration:none;
+font-size:18px;
+}
+
+section{
+padding:60px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+}
+
+form{
+max-width:400px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+.error{
+color:red;
+}
+
+.success{
+color:green;
+}
+
+#topBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+display:none;
+}
+
+small{
+color:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Web Project</h1>
+<button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+<p id="time"></p>
+
+<select onchange="changeTheme(this.value)">
+<option value="">Change Theme</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="purple">Purple</option>
+</select>
+
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section id="home">
+<h2>Home Section</h2>
+<p>Welcome to my website.</p>
+</section>
+
+<section id="about">
+<h2>About Section</h2>
+<p>This is a demo project.</p>
+</section>
+
+<section id="contact">
+
+<h2>Contact Form</h2>
+
+<form id="myForm">
+
+<input type="text" id="name" placeholder="Enter Name">
+<small id="count"></small>
+
+<input type="email" id="email" placeholder="Enter Email">
+
+<button type="submit">Submit</button>
+
+<p id="message"></p>
+
+</form>
+
+<p id="welcome"></p>
+
+</section>
+
+<button id="topBtn" onclick="scrollToTop()">⬆️</button>
+
+<script>
+
+function toggleDarkMode(){
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+localStorage.setItem("mode","dark");
+}else{
+localStorage.setItem("mode","light");
+}
+}
+
+if(localStorage.getItem("mode")==="dark"){
+document.body.classList.add("dark");
+}
+
+function updateTime(){
+let now=new Date();
+document.getElementById("time").innerText=now.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+
+function changeTheme(color){
+if(color==="red"){
+document.body.style.background="#ffdddd";
+}
+else if(color==="green"){
+document.body.style.background="#ddffdd";
+}
+else if(color==="purple"){
+document.body.style.background="#f3ddff";
+}
+}
+
+const nameInput=document.getElementById("name");
+const count=document.getElementById("count");
+
+nameInput.addEventListener("input",function(){
+count.innerText="Length: "+nameInput.value.length;
+});
+
+nameInput.addEventListener("blur",function(){
+
+let name=nameInput.value.toLowerCase();
+
+if(name===""){
+nameInput.value="Guest User";
+}
+else if(name==="ram"){
+nameInput.value="Ram Kumar";
+}
+else if(name==="shyam"){
+nameInput.value="Shyam Singh";
+}
+
+});
+
+function aiResponse(name,email){
+
+name=name.toLowerCase();
+
+if(name.includes("admin")){
+return "Hello Admin 👑";
+}
+else if(email.includes("@gmail.com")){
+return "Welcome Gmail User 📧";
+}
+else{
+return "Hello "+name+" 😊";
+}
+
+}
+
+const form=document.getElementById("myForm");
+const emailInput=document.getElementById("email");
+const message=document.getElementById("message");
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=nameInput.value.trim();
+let email=emailInput.value.trim();
+
+message.className="";
+
+let pattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+if(name==="" || email===""){
+message.innerText="All fields required";
+message.classList.add("error");
+}
+else if(!email.match(pattern)){
+message.innerText="Invalid Email";
+message.classList.add("error");
+}
+else{
+
+let reply=aiResponse(name,email);
+
+message.innerText=reply+" | Form Submitted Successfully";
+message.classList.add("success");
+
+localStorage.setItem("userName",name);
+localStorage.setItem("userEmail",email);
+
+form.reset();
+count.innerText="";
+}
+
+});
+
+window.onload=function(){
+
+let savedName=localStorage.getItem("userName");
+
+if(savedName){
+document.getElementById("welcome").innerText="Welcome back "+savedName+" 👋";
+}
+
+};
+
+const topBtn=document.getElementById("topBtn");
+
+window.onscroll=function(){
+if(document.documentElement.scrollTop>200){
+topBtn.style.display="block";
+}else{
+topBtn.style.display="none";
+}
+};
+
+function scrollToTop(){
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+</script>
+
+</body>
+</html>
