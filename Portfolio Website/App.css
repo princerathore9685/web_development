@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f4f4f4;
+}
+
+header {
+  background: #0077ff;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+section {
+  padding: 20px;
+  margin: 10px;
+  background: white;
+  border-radius: 10px;
+}
+
+h2 {
+  color: #0077ff;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #eee;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.project {
+  background: #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: darkgreen;
+}
