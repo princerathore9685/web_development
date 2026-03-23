@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <title>Prince Rathore Portfolio</title>
+    <head>
+        <style>
+
+            body{
+                    font-family: Arial;
+                    margin:0;
+                    padding:0;
+                }
+
+            header{
+                    background:#222;
+                    color:white;
+                    text-align:center;
+                    padding:30px;
+                }
+
+            nav{
+                    background:#444;
+                    text-align:center;
+                    padding:10px;
+                }
+
+            nav a{
+                    color:white;
+                    margin:15px;
+                    text-decoration:none;
+                    font-weight:bold;
+                }
+
+            section{
+                    padding:40px;
+                    text-align:center;
+
+                }
+
+            .project-container{
+                    display:flex;
+                    justify-content:center;
+                    gap:20px;
+            }
+
+            .project{
+                    border:1px solid #ccc;
+                    padding:20px;
+                    width:250px;
+                    border-radius:10px;
+                    
+                }
+
+            footer{
+                    background:#222;
+                    color:white;
+                    text-align:center;
+                    padding:15px;
+                }
+
+            .tts-btn {
+                background: #007cba;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                margin: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .tts-btn:hover {
+                background: #005a87;
+            }
+
+            .tts-stop {
+                background: #dc3545;
+            }
+
+            .tts-stop:hover {
+                background: #c82333;
+            }
+
+            .speed-control {
+                margin: 10px;
+                padding: 10px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 5px;
+            }
+
+               
+            @media (max-width:768px){
+
+                    .project-container{
+                    flex-direction:column;
+                    align-items:center;
+                    }
+
+                    nav a{
+                    display:block;
+                    margin:10px;
+                    }
+
+                }
+
+        </style>
+
+    </head>
+
+    <body>
+        
+        <div style="text-align:center; padding:10px; background:#333; color:white;">
+            <button class="tts-btn" onclick="speakAll()">🔊 Read Full Page</button>
+            <button class="tts-btn tts-stop" onclick="stopSpeech()">⏹️ Stop</button>
+            <div class="speed-control">
+                Speed: 
+                <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1" style="width:150px;" oninput="setSpeed(this.value)">
+                <span id="speedDisplay">1.0x</span>
+            </div>
+        </div>
+            
+        <header>
+            <h1>My Portfolio</h1>
+            <h2>Prince Rathore</h2>
+            <p>1st Year Student | Learning Java & Web Development</p>
+        </header>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <section id="about">
+            <h2>About Me</h2>
+            <button class="tts-btn" onclick="speakSection('about')">🔊 Read About</button>
+            <p>
+            I am a 1st year college student learning Java and Web Development.
+            I am interested in creating websites and learning new technologies.
+            </p>
+        </section>
+
+        <section id="projects">
+            <h2>My Projects</h2>
+            <button class="tts-btn" onclick="speakSection('projects')">🔊 Read Projects</button>
+
+            <div class="project-container">
+
+            <div class="project">
+            <h3>Portfolio Website</h3>
+            <p>My personal responsive portfolio website.</p>
+            </div>
+
+            <div class="project">
+            <h3>Hello World Page</h3>
+            <p>Simple webpage created using HTML.</p>
+            </div>
+
+            <div class="project">
+            <h3>HTML Practice Website</h3>
+            <p>Website made while learning HTML tags.</p>
+            </div>
+
+            </div>
+
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <button class="tts-btn" onclick="speakSection('contact')">🔊 Read Contact</button>
+
+            <p><b>Phone:</b> +91 9685672441</p>
+            <p><b>Email:</b> Princerathorep4@gmail.com</p>
+            <p><b>Location:</b> Madhya Pradesh, India</p>
+
+        </section>
+
+        <footer>
+            <p>@ 2026 Prince Rathore | Portfolio Website</p>
+        </footer>
+
+        
+        <script>
+            const synth = window.speechSynthesis;
+            let utterance = null;
+            let speed = 1.0;
+
+            function setSpeed(value) {
+                speed = parseFloat(value);
+                document.getElementById('speedDisplay').textContent = speed.toFixed(1) + 'x';
+                if (utterance) utterance.rate = speed;
+            }
+
+            function stopSpeech() {
+                synth.cancel();
+            }
+
+            function getText(elementId) {
+                let text = '';
+                if (elementId === 'all') {
+                    text = document.querySelector('header h1').textContent + '. ';
+                    text += document.querySelector('header h2').textContent + '. ';
+                    text += document.querySelector('header p').textContent + '. ';
+                    
+                    const sections = ['about', 'projects', 'contact'];
+                    sections.forEach(id => {
+                        const section = document.getElementById(id);
+                        if (section) {
+                            const h2 = section.querySelector('h2');
+                            const ps = section.querySelectorAll('p');
+                            if (h2) text += h2.textContent + '. ';
+                            ps.forEach(p => text += p.textContent + '. ');
+                        }
+                    });
+                } else {
+                    const section = document.getElementById(elementId);
+                    if (section) {
+                        const h2 = section.querySelector('h2');
+                        const ps = section.querySelectorAll('p');
+                        if (h2) text += h2.textContent + '. ';
+                        ps.forEach(p => text += p.textContent + '. ');
+                    }
+                }
+                return text;
+            }
+
+            function speakAll() {
+                speak(getText('all'));
+            }
+
+            function speakSection(id) {
+                speak(getText(id));
+            }
+
+            function speak(text) {
+                stopSpeech();
+                if (!text) return;
+
+                utterance = new SpeechSynthesisUtterance(text);
+                
+               
+                const voices = synth.getVoices();
+                const englishVoice = voices.find(voice => 
+                    voice.lang.startsWith('en') && !voice.lang.includes('IN')
+                ) || voices.find(voice => voice.lang.startsWith('en'));
+                
+                if (englishVoice) {
+                    utterance.voice = englishVoice;
+                }
+                
+                utterance.rate = speed;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                utterance.onend = () => {
+                    utterance = null;
+                };
+
+                synth.speak(utterance);
+            }
+
+            
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = () => {
+                    
+                };
+            }
+        </script>
+    </body>
+</html>
